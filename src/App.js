@@ -6,6 +6,7 @@ import Stats from "./app/Home/Stats.jsx";
 import Review from "./app/Home/Review.jsx";
 import ReservationPage from "./app/Reservation/page.jsx";
 import RoomsPage from "./app/Rooms/page.jsx";
+import Rooms from "./app/Home/Rooms.jsx";
 import "./App.css";
 import "./index.css";
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<>
           <Stats />
           <Review />
+          <Rooms />
         </>} />
         </Routes>
       </main>

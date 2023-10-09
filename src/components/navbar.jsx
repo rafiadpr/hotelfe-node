@@ -16,9 +16,9 @@ function Navbar() {
           <li>
             <Link to="/reservations" className="hover:text-gray-300">Reservations</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/contact" className="hover:text-gray-300">Contact</Link>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </header>

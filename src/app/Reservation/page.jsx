@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ReservationPage = () => {
   const initialFormData = {
     nomor_pemesanan: "",
     nama_pemesan: "",
     email_pemesan: "",
-    tgl_pemesanan: "tgl_pemesanan",
-    tgl_check_in: "tglCheckIn",
-    tgl_check_out: "tglCheckOut",
+    tgl_pemesanan: null,
+    tgl_check_in: null,
+    tgl_check_out: null,
     nama_tamu: "",
     jumlah_kamar: "",
     id_tipe_kamar: "",
@@ -17,8 +19,8 @@ const ReservationPage = () => {
     status_pemesanan: "",
     detail_pemesanan: [
       {
-        id_kamar: "1",
-        harga: "1200000",
+        id_kamar: null,
+        harga: null,
         tgl_akses: "",
       },
     ],
@@ -29,6 +31,14 @@ const ReservationPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCheckInChange = (date) => {
+    setFormData({ ...formData, tgl_check_in: date });
+  };
+
+  const handleCheckOutChange = (date) => {
+    setFormData({ ...formData, tgl_check_out: date });
   };
 
   const handleSubmit = (e) => {
@@ -61,11 +71,39 @@ const ReservationPage = () => {
   const inputFields = [
     { name: "nama_pemesan", label: "Nama Pemesan", type: "text" },
     { name: "email_pemesan", label: "Email Pemesan", type: "email" },
-    { name: "tgl_check_in", label: "Tanggal Check-in", type: "date" },
-    { name: "tgl_check_out", label: "Tanggal Check-out", type: "date" },
+    {
+      name: "tgl_check_in",
+      label: "Tanggal Check-in",
+      type: "date",
+      component: (
+        <ReactDatePicker
+          selected={formData.tgl_check_in}
+          minDate={new Date()} // Set the minimum date to today
+          onChange={handleCheckInChange}
+          dateFormat="dd/MM/yyyy"
+          className="mt-1 p-2 border rounded-md w-full"
+          required
+        />
+      ),
+    },
+    {
+      name: "tgl_check_out",
+      label: "Tanggal Check-out",
+      type: "date",
+      component: (
+        <ReactDatePicker
+          selected={formData.tgl_check_out}
+          minDate={new Date()}
+          onChange={handleCheckOutChange}
+          dateFormat="dd/MM/yyyy"
+          className="mt-1 p-2 border rounded-md w-full"
+          required
+        />
+      ),
+    },
     { name: "nama_tamu", label: "Nama Tamu", type: "text" },
     { name: "jumlah_kamar", label: "Jumlah Kamar", type: "number" },
-    { name: "id_tipe_kamar", label: "ID Tipe Kamar", type: "number" },
+    { name: "id_tipe_kamar", label: "Tipe Kamar", type: "number" },
   ];
 
   return (
@@ -81,17 +119,22 @@ const ReservationPage = () => {
               >
                 {field.label}
               </label>
-              <input
-                type={field.type}
-                id={field.name}
-                name={field.name}
-                value={formData[field.name]}
-                onChange={handleChange}
-                className="mt-1 p-2 border rounded-md w-full"
-                required
-              />
+              {field.component ? (
+                field.component
+              ) : (
+                <input
+                  type={field.type}
+                  id={field.name}
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  className="mt-1 p-2 border rounded-md w-full"
+                  required
+                />
+              )}
             </div>
           ))}
+
           <div className="mt-4">
             <button
               type="submit"
