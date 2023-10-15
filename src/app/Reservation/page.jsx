@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -81,19 +80,19 @@ const ReservationPage = () => {
         const message = response.data.message;
 
         if (message === "New pemesanan has been inserted with details.") {
-          toast.success("Pemesanan Sukses");
+          alert("Pemesanan Sukses");
         } else {
           // Check if the error message indicates no available rooms
           if (response.data.error === "No available rooms found") {
             alert("Tidak ada kamar yang tersedia.");
           } else {
-            toast.error("Pemesanan Gagal");
+            alert("Pemesanan Gagal");
           }
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        toast.error("Terjadi kesalahan saat mengirim data.");
+        alert("Terjadi kesalahan saat mengirim data.");
       });
 
     // Reset the form
